@@ -1,0 +1,10 @@
+<div>
+   <h2>Employees</h2>
+   <ul class="employees">
+       <li *ngFor="let employee of employees"
+          [class.selected]="selected===employee"
+          (click)="navEmployee(employee)">
+          <span class="badge">{{employee.employeeNo}}</span> {{employee.surname}}
+       </li>
+   </ul>
+</div>

@@ -1,0 +1,18 @@
+<div *ngIf="asset">
+  <h2>
+    {{assetTypeName}}
+  </h2>
+  <div>
+     <label>Serial No.</label>
+     <input type="text"
+            [(ngModel)]="asset.serialNo"/>
+  </div>
+</div>
+<div style="margin-top:10px;">
+   <button (click)="goBack()">Back</button>
+   <button (click)="update()">Update</button>
+   <button (click)="delete()">Delete</button>
+</div>
+<div>
+   <button *ngFor="let action of actions">{{assetStatus[action]}}</button>
+</div>
