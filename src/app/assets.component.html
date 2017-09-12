@@ -2,10 +2,15 @@
    <h2>Assets</h2>
    <ul class="assets">
        <li *ngFor="let asset of assets"
-          [class.selected]="selected===asset"
           (click)="navAsset(asset)">
           <span class="badge">{{asset.assetID}}</span> {{asset.assetTypeID}}
        </li>
    </ul>
    <button (click)="addAsset()">Add Asset</button>
+   <ul class="assets">
+       <li *ngFor="let asset of pouchAssets"
+          (click)="navAsset(asset._id)">
+          <span class="badge">{{asset.assetID}}</span> {{asset.assetTypeID}}
+       </li>
+   </ul>
 </div>

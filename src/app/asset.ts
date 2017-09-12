@@ -24,3 +24,13 @@ export enum AssetStatus {
     missing = 3,
     disposed = 4
 }
+
+
+export const ASSET_TRANSITIONS: AssetTransition [] = [
+    {from: AssetStatus.working, to: AssetStatus.disposed},
+    {from: AssetStatus.working, to: AssetStatus.missing},
+    {from: AssetStatus.working, to: AssetStatus.broken},
+    {from: AssetStatus.broken,  to: AssetStatus.disposed},
+    {from: AssetStatus.missing, to: AssetStatus.disposed},
+ ];
+ 

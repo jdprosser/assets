@@ -44,9 +44,11 @@ anArray.forEach(element => console.log(element));}
     this.assetService.getAssets().then(fullfilled => this.assets = fullfilled);
   }
 
-  // navAsset ==========================================================================================
-  navAsset(asset: Asset) {
-     this.router.navigate(['asset/', asset.assetID]);
+  /* navAsset ==========================================================================================
+     DESIGN: can we got to point where dewaling with an Asset rather than any?
+  =================================================================================================== */
+  navAsset(_id: string) {
+     this.router.navigate(['asset/', _id]);
   }
   
   // addAsset ==========================================================================================

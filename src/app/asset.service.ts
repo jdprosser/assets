@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Asset,
          AssetStatus,
+         ASSET_TRANSITIONS,
          AssetType } from './asset';
 import { ASSETS,
-         ASSET_TRANSITIONS,
          ASSETTYPE } from './mock.assets';
 
 @Injectable()

@@ -41,14 +41,6 @@ export const ASSETS: Asset [] = [
    }
 ];
 
-export const ASSET_TRANSITIONS: AssetTransition [] = [
-   {from: AssetStatus.working, to: AssetStatus.disposed},
-   {from: AssetStatus.working, to: AssetStatus.missing},
-   {from: AssetStatus.working, to: AssetStatus.broken},
-   {from: AssetStatus.broken,  to: AssetStatus.disposed},
-   {from: AssetStatus.missing, to: AssetStatus.disposed},
-];
-
 
 export const ASSETTYPE: AssetType[] = [
    {assetTypeID: 1000,

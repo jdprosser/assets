@@ -78,42 +78,7 @@ export class PouchAssetService {
    }
 
 
-   /* create ===========================================================================================
-      @param asset object to be written Pouch.
 
-      DESIGN: The Josh Mohony example returned vois, just adding to the array. Something to be said for 
-              that, do we even need to know anything other than success??
-              Possibly so that we don't hang while it's saving. But, maybe that's a good thing, maybe
-              we don't want to take them back to a page that doesn't actually show the thing they 
-              just added? Good point.
-   ================================================================================================== */
-   create(asset): Promise <any> {
-     return this.db.post(asset)
-    .then(response => response);
-   }
-
-
-   /* update ===========================================================================================
-      @param asset object from local array to be updated in Pouch. Identified by _id _rev.
-      @warn  not yet handling revision conflict
-
-      DESIGN: As for create, why do we need to return anything?
-   ================================================================================================== */
-   update(asset): Promise<any> {
-     return this.db.put(asset)
-     .then(response => response)
-     .catch ( err => { console.log(err) } )
-   }
-
-
-   /* delete ===========================================================================================
-      @param asset object from local array to be deleted fom Pouch. Identified by _id _rev.
-      @warn  not yet handling revision conflict
-   ================================================================================================== */
-   delete(asset) {
-      this.db.remove(asset)
-     .catch ( err => { console.log(err); } )
-   }
 
 
    /* handleChange =====================================================================================
@@ -153,4 +118,53 @@ export class PouchAssetService {
              // ASSERT: A document has been added
              this.data.push(change.doc);
    }  }  }
+
+
+
+    /* create ===========================================================================================
+      @param asset object to be written Pouch.
+
+      DESIGN: The Josh Mohony example returned vois, just adding to the array. Something to be said for 
+              that, do we even need to know anything other than success??
+              Possibly so that we don't hang while it's saving. But, maybe that's a good thing, maybe
+              we don't want to take them back to a page that doesn't actually show the thing they 
+              just added? Good point.
+   ================================================================================================== */
+   create(asset): Promise <any> {
+     return this.db.post(asset)
+    .then(response => response);
+   }
+
+
+   /* update ===========================================================================================
+      @param asset object from local array to be updated in Pouch. Identified by _id _rev.
+      @warn  not yet handling revision conflict
+
+      DESIGN: As for create, why do we need to return anything?
+   ================================================================================================== */
+   update(asset): Promise<any> {
+     return this.db.put(asset)
+     .then(response => response)
+     .catch ( err => { console.log(err) } )
+   }
+
+
+   /* delete ===========================================================================================
+      @param asset object from local array to be deleted fom Pouch. Identified by _id _rev.
+      @warn  not yet handling revision conflict
+   ================================================================================================== */
+   delete(asset) {
+      this.db.remove(asset)
+     .catch ( err => { console.log(err); } )
+   }
+
+   /* get ==============================================================================================
+      @param _id PouchDB ID of the asset to retrieve
+      @DESIGN This is definitely something that can fail if the item has just been deleted!!!!!!!!!!!
+   ================================================================================================== */
+   get(_id: string): Promise<any> {
+      return this.db.get(_id)
+     .then(doc => doc)
+     .catch( err => console.log("Parrot:" + _id + err) );
+   }
 }
