@@ -5,6 +5,7 @@ import { Routes,
 import { EmployeesComponent } from './employees.component';
 import { AssetsComponent } from './assets.component';
 import { AssetComponent } from './asset.component';
+import { StatusComponent } from './status.component';
 import { AddAssetComponent } from './add-asset.component';
 
 const routes: Routes = [
@@ -17,6 +18,9 @@ const routes: Routes = [
    { path: 'employees',
      component: EmployeesComponent
    },
+   { path: 'status',
+   component: StatusComponent
+ },
    { path: '',
      redirectTo: 'assets',
      pathMatch: 'full'

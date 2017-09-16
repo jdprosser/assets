@@ -2,7 +2,9 @@ import { Component,
          OnInit } from '@angular/core';
 import { Asset } from './asset';
 import { AssetService } from './asset.service';
+import { DataView } from './data.view';
 import { PouchAssetService } from './pouch.asset.service';
+import { ObsAssetService } from './obs.asset.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,34 +12,40 @@ import { Router } from '@angular/router';
   templateUrl: './assets.component.html',
   styleUrls: ['./assets.component.css'],
   providers: [AssetService,
-              PouchAssetService]
+              PouchAssetService,
+              ObsAssetService]
 })
 export class AssetsComponent {
 
   assets: Asset [];
   pouchAssets: any [];
 
+  dataView: any [];
+
   // constructor =======================================================================================
   constructor(private assetService: AssetService,
               private pouchAssetService: PouchAssetService,
-              private router: Router) {}
+              private obsAssetService: ObsAssetService,
+              private router: Router) {
+     console.log("AssetsComponent constructor");
+  }
 
   
   ngOnInit(): void {
+     console.log("AssetsComponent ngOnInit");
      this.getAssets();
-     this.pouchAssetService.getAssets()
-         .then(data => {
-                  console.log("assets.component ngOnInit() then data => ");
-                  this.pouchAssets = data;
-                  this.tempLogPouchAssets(data);
-               } 
+     this.obsAssetService.getAssets()
+         .then(data => { this.pouchAssets = data; } 
+         );
+     this.pouchAssetService.view("assets")
+         .then(view => { this.dataView = view.data; }
          );
   }
   
 
-tempLogPouchAssets(anArray: any[]): void { // DELETE ME
-console.log("== trace array ================================================");
-anArray.forEach(element => console.log(element));}
+tempLogPouchAssets(anArray: any[]): void {
+   anArray.forEach(element => console.log(element))
+}
 
 
   getAssets(): void {

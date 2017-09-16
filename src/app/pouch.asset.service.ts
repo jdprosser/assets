@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
+import { DataView } from './data.view';
+
 
 /* pouch.asset.service.ts ==============================================================================
    A service sitting on top of PouchDB hooked back into remote CouchDB.
@@ -19,6 +21,9 @@ export class PouchAssetService {
 
    db: any;
    data: any [];
+
+   dataViews: DataView[] = [];
+
 
    /* constructor ======================================================================================
       Hook into (or create if not present) pouchdb and synchronise it with remote couchDB.
@@ -120,6 +125,64 @@ export class PouchAssetService {
    }  }  }
 
 
+   /* view =============================================================================================
+      Don't really know what I'm doing. I want to be able to return View objects that provide an array
+      that is maintaned by this class and allows (or disallows) CRUD.
+   ================================================================================================== */
+   view(name: string): Promise<DataView> { 
+      var data: any[] = [];
+      var view: DataView;
+
+      return new Promise (
+         resolve => {                                                                                   // Read in data and callback Promise resolve
+            this.db.allDocs (                                                                           // Fetch all PouchDB documents
+               { include_docs: true }                                                                   // Whole document (not just id) Tons other options.
+            )
+           .then (                                                                                      // then store the data in local array
+               result => {
+                  let docs = result.rows.map(                                                           // Erm, why declare docs?
+                     row => {                                                                           // For each document (row)  
+                        data.push(row.doc);                                                             // push it onto local data array.
+                     }
+                  );
+                  // ASSERT: have initialised data array with PouchDB data.
+                  view = new DataView(name,
+                                      data);
+                  this.dataViews.push(view);
+                  resolve(view);                                                                        // callback Promise confirming resolved.
+                  this.db.changes({ live:true,
+                                    since: 'now',
+                                    include_docs: true })
+                 .on('change', change => this.viewHandleChange(change));
+                 // ASSERT: Have registered listener to keep this.data consistent with Pouch changes.
+               }
+            )
+           .catch(error => console.log(error));
+         }
+      )
+   }
+   
+   // WARN: Going to be synchronisation issues?
+   // Still 98% inefficient
+   viewHandleChange(change): void {
+      this.dataViews.forEach(
+        view => {
+           console.log(change.id + " : " + change.seq + " : " + change.changes.length + " : " + change.doc._id);
+           // Delete current old version if is one.
+
+           var index: number = view.data.findIndex(doc => {
+            console.log("Compare:"+doc._id +":"+change.doc._id);
+            return doc._id === change.doc._id;
+           }
+          );
+           if (index != -1) {console.log("found index:" + index);
+                                         view.data.splice(index,
+                                                          1)};
+           // Add it back if not just deleted and passes test
+           if (! change.deleted) {view.data.push(change.doc);}
+        }
+      );
+   }
 
     /* create ===========================================================================================
       @param asset object to be written Pouch.

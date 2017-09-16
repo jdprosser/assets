@@ -1,16 +1,24 @@
-<div>
+<div *ngIf="dataView  && assets && pouchAssets">
    <h2>Assets</h2>
-   <ul class="assets">
+   <!--ul class="assets">
        <li *ngFor="let asset of assets"
           (click)="navAsset(asset)">
           <span class="badge">{{asset.assetID}}</span> {{asset.assetTypeID}}
        </li>
-   </ul>
+   </ul-->
    <button (click)="addAsset()">Add Asset</button>
+   <h3>pouchAssets</h3>
    <ul class="assets">
-       <li *ngFor="let asset of pouchAssets"
+      <li *ngFor="let asset of pouchAssets"
           (click)="navAsset(asset._id)">
-          <span class="badge">{{asset.assetID}}</span> {{asset.assetTypeID}}
-       </li>
+         <span class="badge">{{asset.assetID}}</span> {{asset.assetTypeID}}
+      </li>
+   </ul>
+   <h3>dataView.data</h3>
+   <ul class="assets">
+      <li *ngFor="let asset of dataView"
+          (click)="navAsset(asset._id)">
+         <span class="badge">{{asset.assetID}}</span> {{asset.assetTypeID}}
+      </li>
    </ul>
 </div>
