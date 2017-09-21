@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { AssetsComponent } from './assets.component';
 import { EmployeesComponent } from './employees.component';
 import { AssetComponent } from './asset.component';
+import { StatusComponent } from './status.component';
 import { AddAssetComponent } from './add-asset.component';
 
 import { AppRoutingModule } from './app.routing.module';
 
-import { PouchAssetService } from './pouch.asset.service';
+import { PouchService } from './pouch.services/pouch.service';
+import { AllDocs }           from './pouch.services/alldocs';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { PouchAssetService } from './pouch.asset.service';
     AssetsComponent,
     EmployeesComponent,
     AssetComponent,
+    StatusComponent,
     AddAssetComponent
   ],
   imports: [
@@ -25,7 +28,9 @@ import { PouchAssetService } from './pouch.asset.service';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [PouchAssetService],
+  providers: [ PouchService,
+               AllDocs
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

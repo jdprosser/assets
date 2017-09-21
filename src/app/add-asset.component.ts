@@ -2,7 +2,7 @@ import 'rxjs/add/operator/switchMap';
 import { Component } from '@angular/core';
 import { Asset,
          AssetStatus } from './asset';
-import { PouchAssetService } from './pouch.asset.service';
+import { PouchService } from './pouch.services/pouch.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,7 +14,7 @@ export class AddAssetComponent {
    asset: Asset = new Asset();
 
    constructor (private location: Location,
-                private pouchAssetService: PouchAssetService) {}
+                private pouchService: PouchService) {}
   
 
    /* save =============================================================================================
@@ -25,8 +25,8 @@ export class AddAssetComponent {
    ================================================================================================== */
    save(): void {
      this.asset.assetStatusID = AssetStatus['working'];
-     this.pouchAssetService
-         .create(this.asset)
+     this.pouchService
+         .post(this.asset)
          .then(() => this.location.back())
    }
 }

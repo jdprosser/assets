@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Asset, AssetStatus } from './asset';
 import { AssetService } from './asset.service';
-import { PouchAssetService } from './pouch.asset.service';
+import { PouchService } from './pouch.services/pouch.service';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -10,7 +10,7 @@ import 'rxjs/add/operator/switchMap';
   templateUrl: './asset.component.html',
   styleUrls: [],
   providers: [AssetService,
-              PouchAssetService]
+              PouchService]
 })
 export class AssetComponent
        implements OnInit {
@@ -23,13 +23,13 @@ export class AssetComponent
    // controller =======================================================================================
    constructor(private route: ActivatedRoute,
                private assetService: AssetService,
-               private pouchAssetService: PouchAssetService) {}
+               private pouchService: PouchService) {}
 
    // ngOnInit =========================================================================================
    ngOnInit() {
      this.route
          .paramMap
-         .switchMap((params: ParamMap) => this.pouchAssetService.get(params.get('id')))
+         .switchMap((params: ParamMap) => this.pouchService.get(params.get('id')))
          .subscribe(asset => {
                        // set controller variables for selected asset
                        this.actions = this.assetService.getActions(asset.assetStatusID);

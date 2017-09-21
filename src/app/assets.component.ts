@@ -1,56 +1,21 @@
-import { Component,
-         OnInit } from '@angular/core';
-import { Asset } from './asset';
-import { AssetService } from './asset.service';
-import { DataView } from './data.view';
-import { PouchAssetService } from './pouch.asset.service';
-import { ObsAssetService } from './obs.asset.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AssetDS } from './data.services/asset';
+
 
 @Component({
   selector: 'assets',
   templateUrl: './assets.component.html',
   styleUrls: ['./assets.component.css'],
-  providers: [AssetService,
-              PouchAssetService,
-              ObsAssetService]
+  providers: [AssetDS]
 })
 export class AssetsComponent {
 
-  assets: Asset [];
-  pouchAssets: any [];
-
-  dataView: any [];
 
   // constructor =======================================================================================
-  constructor(private assetService: AssetService,
-              private pouchAssetService: PouchAssetService,
-              private obsAssetService: ObsAssetService,
-              private router: Router) {
-     console.log("AssetsComponent constructor");
-  }
+  constructor(private router: Router,
+              private assetDS: AssetDS) { }
 
-  
-  ngOnInit(): void {
-     console.log("AssetsComponent ngOnInit");
-     this.getAssets();
-     this.obsAssetService.getAssets()
-         .then(data => { this.pouchAssets = data; } 
-         );
-     this.pouchAssetService.view("assets")
-         .then(view => { this.dataView = view.data; }
-         );
-  }
-  
-
-tempLogPouchAssets(anArray: any[]): void {
-   anArray.forEach(element => console.log(element))
-}
-
-
-  getAssets(): void {
-    this.assetService.getAssets().then(fullfilled => this.assets = fullfilled);
-  }
 
   /* navAsset ==========================================================================================
      DESIGN: can we got to point where dewaling with an Asset rather than any?

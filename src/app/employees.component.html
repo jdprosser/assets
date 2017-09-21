@@ -1,10 +1,11 @@
 <div>
-   <h2>Employees</h2>
-   <ul class="employees">
-       <li *ngFor="let employee of employees"
-          [class.selected]="selected===employee"
-          (click)="navEmployee(employee)">
-          <span class="badge">{{employee.employeeNo}}</span> {{employee.surname}}
-       </li>
-   </ul>
-</div>
+        <!-- BUT I WANT *ngIF working!!! -->
+       <h2>Employees</h2>
+       <button (click)="addEmployee()">Add Employee</button>
+       <ul class="employees">
+          <li *ngFor="let employee of employeeDS.data$ | async">
+              <span class="badge">{{employee.PayrollNo}}</span> {{employee.Surname}}
+          </li>
+       </ul>
+    
+    </div>

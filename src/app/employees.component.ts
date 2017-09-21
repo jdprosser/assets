@@ -1,32 +1,32 @@
-import { Component,
-         OnInit } from '@angular/core';
-import { Employee } from './employee';
-import { EmployeeService } from './employee.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EmployeeDS } from './data.services/employee';
+import { Employee } from './employee';
+
 
 @Component({
-  selector: 'assets',
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.css'],
-  providers: [EmployeeService]
+  providers: [EmployeeDS]
 })
 export class EmployeesComponent {
 
-  employees: Employee [];
-  selected: Employee;  // NO LONGER USED?
 
-  constructor(private employeeService: EmployeeService,
-              private router: Router) {}
+  // constructor =======================================================================================
+  constructor(private router: Router,
+              private employeeDS: EmployeeDS) { }
 
-  ngOnInit(): void {
-     this.getEmployees();
-  }
-  
-  getEmployees(): void {
-    this.employeeService.getEmployees().then(fullfilled => this.employees = fullfilled);
-  }
 
+  /* navEmployee =======================================================================================
+     Lets see how it goes composing and workin with Objects
+  =================================================================================================== */
   navEmployee(employee: Employee) {
      this.router.navigate(['employee/', employee.employeeNo]);
   }
+
+  // addAsset ==========================================================================================
+  addEmployee(): void {
+      this.router.navigate(['/addEmployee']);
+   }
+
 }
