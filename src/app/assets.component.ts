@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssetDS } from './data.services/asset';
-
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'assets',
@@ -12,6 +12,7 @@ import { AssetDS } from './data.services/asset';
 export class AssetsComponent {
 
 
+  data$: Observable<any> = this.assetDS.getObservable();
   // constructor =======================================================================================
   constructor(private router: Router,
               private assetDS: AssetDS) { }

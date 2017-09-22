@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeDS } from './data.services/employee';
 import { Employee } from './employee';
-
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   templateUrl: './employees.component.html',
@@ -11,6 +11,8 @@ import { Employee } from './employee';
 })
 export class EmployeesComponent {
 
+
+  data$: Observable<any> = this.employeeDS.getObservable();
 
   // constructor =======================================================================================
   constructor(private router: Router,

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
       <h2>Status codes A</h2>
       <h2>Concrete</h2>
       <ul class="assets">
-      <li *ngFor="let subject of data | async">
+      <li *ngFor="let subject of data$ | async">
          <span class="badge">{{subject.Name}}</span> {{subject._id}}
       </li>
    </ul>
@@ -23,10 +23,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class StatusComponent {
    
-  data: Observable<any> = this.typeAssetStatusDS.getObservable();
+   data$: Observable<any> = this.typeAssetStatusDS.getObservable();
 
-   constructor ( private typeAssetStatusDS: TypeAssetStatusDS ) {
-
-    }
+   constructor ( private typeAssetStatusDS: TypeAssetStatusDS ) { }
 
 }

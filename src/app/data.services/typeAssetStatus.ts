@@ -1,31 +1,40 @@
 
 import { AllDocsAbstract } from '../pouch.services/alldocs.abstract';
-import { PouchService } from '../pouch.services/pouch.service';
-import { NgZone} from '@angular/core';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
-@Injectable()
 export class TypeAssetStatusDS
        extends AllDocsAbstract {
 
-   constructor( pouchService: PouchService,
-                ngZone: NgZone) {
-      super(pouchService, ngZone);
-   }
+   private TABLE_NAME: string = 'TypeAssetStatus_';
 
-   TABLE_NAME: string = 'TypeAssetStatus_';
-
-   getObservable(): Observable<any> {
-    this.setData();
-    return this.data$;
-}
-
-   myOptions(): any {
+   // query ============================================================================================
+   protected query(): any {
       return { 
          include_docs: true,
          startkey: this.TABLE_NAME,
          endkey: this.TABLE_NAME + '\uffff'
       };
-   }   
+   }
+
+
+   // filter ===========================================================================================
+   protected filter(doc: any): boolean {
+      return doc._id.slice(0, this.TABLE_NAME.length) == this.TABLE_NAME;
+   }
+
+
+   // compose ==========================================================================================
+   protected compose(doc: any) {
+      return {_id: doc._id,
+              _rev: doc._rev,
+              Name: doc.Name};
+   }
+
+
+   // compare ==========================================================================================
+   protected compare(a: any, b: any): number {
+      if (a.Name < b.Name) return -1;
+      if (a.Name > b.Name) return 1;
+      return 0;
+   }
+
 }

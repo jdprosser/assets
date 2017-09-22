@@ -1,27 +1,24 @@
 
 import { AllDocsAbstract } from '../pouch.services/alldocs.abstract';
-import { PouchService } from '../pouch.services/pouch.service';
-import { NgZone} from '@angular/core';
-import { Injectable } from '@angular/core';
 
-@Injectable()
 export class EmployeeDS
        extends AllDocsAbstract {
-   
-   constructor( pouchService: PouchService,
-                ngZone: NgZone ) {
-      super(pouchService,
-            ngZone);
-      this.setData();
-   }
 
-   TABLE_NAME: string = 'Employee_';
+   private TABLE_NAME: string = 'Employee_';
 
-   myOptions(): any {
+   // query ============================================================================================
+   protected query(): any {
       return { 
          include_docs: true,
          startkey: this.TABLE_NAME,
          endkey: this.TABLE_NAME + '\uffff'
       };
    }
+
+
+   // filter ===========================================================================================
+   protected filter(doc: any): boolean {
+      return doc._id.slice(0, this.TABLE_NAME.length) == this.TABLE_NAME;
+   }
+
 }

@@ -2,7 +2,7 @@
     <!-- BUT I WANT *ngIF working!!! -->
    <h2>Assets</h2>
    <ul class="assets">
-      <li *ngFor="let asset of assetDS.data$ | async">
+      <li *ngFor="let asset of data$ | async">
           <span class="badge">{{asset.serialNo}}</span> {{asset.TypeAssetStatusID | slice:16}}
       </li>
    </ul>
